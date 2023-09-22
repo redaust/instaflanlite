@@ -1,0 +1,88 @@
+
+<!-- Modal -->
+<div class="modal fade modal-lg" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <%= form_with(model: post) do |form| %>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Create new Post</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex" >
+
+      <div class="border-end border-secondary mx-2" style="width: 60%;>
+        <%= form.file_field :images, multiple: true, id: "post-images", required: true %>
+        </div>
+
+      <div style="width: 40%">
+         <% if post.errors.any? %>
+            <div style="color: red">
+              <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+              <ul>
+                <% post.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="my-2">
+          <% if current_user.profile_pic.attached? %>
+          <%= image_tag current_user.profile_pic, class: "img-thumbnail rounded ms-auto", style: "width: 17%" %>
+          <% else %>
+          <%= image_tag 'flanatar.png', class: "img-thumbnail rounded", style: "width: 17%" %>
+          <% end %>
+
+
+          <%= current_user.email %>
+        </div>
+          <div>
+            <%= form.text_area :caption, rows:8, placeholder: "Enter caption", class:"form-control", style:"resize:none" %>
+          </div>
+
+          <div>
+            <%= form.text_field :location, placeholder:"Add location", class: "form-control" %>
+          </div>
+          <div class="d-flex justify-content-between">
+          <a class="btn btn-dark form-control my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Advanced Settings <i class="fa-regular fa-square-caret-down"></i>
+          </a>
+        </div>
+                    <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                        <div>
+            <%= form.label :allow_comments, style: "display: block" %>
+            <%= form.check_box :allow_comments, checked: true %>
+          </div>
+
+
+
+          <div>
+            <%= form.label :show_likes_count, style: "display: block" %>
+            <%= form.check_box :show_likes_count, checked: true %>
+          </div>
+            </div>
+          </div>
+
+
+      </div>  
+
+
+
+          <div>
+  
+          </div>
+
+          <div>
+            
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <%= form.submit 'Post', class:"btn btn-warning" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
